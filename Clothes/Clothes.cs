@@ -11,10 +11,19 @@ using System.Runtime.CompilerServices;
 
 namespace Domain.Cloth
 {
+    /*
+    enum status
+    {
+        Available = 0,
+        Rental = 1,
+        NeedToSell = 2,
+        Sold = 3
+    }
+    */
     [Table("Clothes")]
     public class Clothes
     {
-
+        
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Required]
@@ -37,9 +46,7 @@ namespace Domain.Cloth
             }
         }
 
-        public Clothes()
-        {
-        }
+        
 
         private int rentalPrice = 20000;
         public int RentalPrice
@@ -53,11 +60,25 @@ namespace Domain.Cloth
                 if (value >= 20000) rentalPrice = value;
             }
         }
-        public bool IsRental { get; private set; }
         public int IDType { get; private set; }
         public int IDOrigin { get; private set; }
-        public bool? IsSolve { get; private set; }
-        public Clothes(int iD, string name, string? description, string? size, int? price, int rentalTime, int rentalPrice, bool isRental, int iDType, int iDOrigin,bool? isSolve)
+        private int status = 0;
+        public int Status { 
+            get 
+            { 
+                return status; 
+            } 
+            private set
+            {
+                if (status >= 0 && status <= 3) status = value;
+            } 
+        }
+
+        public Clothes()
+        {
+        }
+
+        public Clothes(int iD, string name, string? description, string? size, int? price, int rentalTime,  int rentalPrice, int iDType, int iDOrigin, int status)
         {
             ID = iD;
             Name = name;
@@ -66,11 +87,11 @@ namespace Domain.Cloth
             Price = price;
             RentalTime = rentalTime;
             RentalPrice = rentalPrice;
-            IsRental = isRental;
             IDType = iDType;
             IDOrigin = iDOrigin;
-            IsSolve = isSolve;
+            Status = status;
         }
+
         public void ChangeName(string name)
         {
             Name = name;
@@ -96,15 +117,10 @@ namespace Domain.Cloth
             RentalPrice = rentalPrice;
         }
 
-        public void ChangeIsRental(int limit)
+        public void ChangeStatus(int stt,int limit)
         {
-            if (RentalTime >= limit)
-            {
-                IsSolve = true;
-                IsRental = false;
-            }
-            else IsRental = !IsRental;
-
+            Status = stt;
+            if (stt!=3 && limit <= RentalTime) Status = 2;
         }
         public void ChangeIDTypee(int iDType)
         {
@@ -114,10 +130,7 @@ namespace Domain.Cloth
         {
             IDOrigin = iDOrigin;
         }
-        public void ChangeIsSolve()
-        {
-            IsSolve=!IsSolve;
-        }
+        
     }
 }
 
