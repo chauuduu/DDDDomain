@@ -19,21 +19,19 @@ namespace Domain.Invoices
         public int CustomerId { get; private set; }
         public int StaffId { get; private set; }
         public int Discount { get; private set; }
-        public int Total { get; private set; }
         public Customer Customer { get; private set; }
         public Staff Staff { get; private set; }
         public List<DetailInvoice> DetailInvoices { get; private set; } = new List<DetailInvoice>();
-        public Invoice(int customerId, int staffId, int discount, int total)
+        public Invoice(int customerId, int staffId, int discount)
         {
-            Update(DateTime.Now,customerId, staffId, discount, total);
+            Update(DateTime.Now,customerId, staffId, discount);
         }
-        public void Update(DateTime date, int customerId, int staffId, int discount, int total)
+        public void Update(DateTime date, int customerId, int staffId, int discount)
         {
             Date = date;
             CustomerId = customerId;
             StaffId = staffId;
             Discount = discount>0?discount:0;
-            Total = total;
         }
     }
 }
