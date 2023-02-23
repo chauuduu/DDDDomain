@@ -12,34 +12,19 @@ namespace Domain.Cloth
     [Table("TypeClothes")]
     public class TypeClothes
     {
-        public TypeClothes()
-        {
-            this.Clothes = new List<Clothes>();
-        }
-
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Required]
-        public int IDType { get; private set; }
-        [MaxLength(50)]
+        public TypeClothes(){}
+        public int Id { get; private set; }
         public string Name { get; private set; }
-        public int? Limit { get; private set; }
-
-        public TypeClothes(int iDType, string name, int? limit)
+        public int Limit { get; private set; }
+        public List<Clothes> Clothes { get; private set; } = new List<Clothes>();
+        public TypeClothes(string name, int limit)
         {
-            IDType = iDType;
-            Name = name;
-            Limit = limit;
+            Update(name,limit);
         }
-
-        public List<Clothes> Clothes { get; private set; }
-        public void ChangeName(string name)
+        public void Update(string name, int limit)
         {
-            Name = name;
-        }
-        public void ChangeLimit(int? value)
-        {
-            Limit = value;
+            Name = name.Trim();
+            Limit = limit>1?limit:1;
         }
     }
 }

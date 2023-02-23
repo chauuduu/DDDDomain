@@ -7,69 +7,36 @@ using System.Text;
 using System.Threading.Tasks;
 using Domain.Invoices;
 using Domain.LaundryInvoices;
+using Microsoft.EntityFrameworkCore.Update.Internal;
 
 namespace Domain.Staffs
 {
     [Table("Staff")]
     public class Staff
     {
-        public Staff()
-        {
-            this.Invoices = new List<Invoice>();
-            this.LaundryInvoices = new List<LaundryInvoice>();
-        }
-
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Required]
-        public int ID { get; private set; }
+        public Staff() { }
+        public int Id { get; private set; }
         public string CitizenCode { get; private set; }
         public string FullName { get; private set; }
-        public DateTime? Birthday { get; private set; }
-
+        public DateTime Birthday { get; private set; }
         public string Phone { get; private set; }
         public string Address { get; private set; }
-        public int IDRole { get; private set; }
-
+        public int RoleId { get; private set; }
         public RoleStaff RoleStaff { get; private set; }
-        public List<Invoice> Invoices { get; private set; }
-        public List<LaundryInvoice> LaundryInvoices { get; private set; }
-
-        public Staff(int iD, string citizenCode, string fullName, DateTime? birthday, string phone, string address, int iDRole, RoleStaff roleStaff)
+        public List<Invoice> Invoices { get; private set; } = new List<Invoice>();
+        public List<LaundryInvoice> LaundryInvoices { get; private set; } = new List<LaundryInvoice>();
+        public Staff(string citizenCode, string fullName, DateTime birthday, string phone, string address, int roleId)
         {
-            ID = iD;
-            CitizenCode = citizenCode;
-            FullName = fullName;
+            Update(citizenCode,fullName,birthday,phone,address,roleId);
+        }
+        public void Update(string citizenCode, string fullName, DateTime birthday, string phone, string address, int roleId)
+        {
+            CitizenCode = citizenCode.Trim();
+            FullName = fullName.Trim();
             Birthday = birthday;
-            Phone = phone;
-            Address = address;
-            IDRole = iDRole;
-            RoleStaff = roleStaff;
+            Phone = phone.Trim();
+            Address = address.Trim();
+            RoleId = roleId;
         }
-        public void ChangeCitizenCode(string citizenCode)
-        {
-            CitizenCode = citizenCode;
-        }
-        public void ChangeName(string name)
-        {
-            FullName = name;
-        }
-        public void ChangeBirthday(DateTime? birthday)
-        {
-            Birthday = birthday;
-        }
-        public void ChangePhone(string phone)
-        {
-            Phone = phone;
-        }
-        public void ChangeAddress(string address)
-        {
-            Address = address;
-        }
-        public void ChangeIDRike(int idRole)
-        {
-            IDRole= idRole;
-        }
-        
     }
 }

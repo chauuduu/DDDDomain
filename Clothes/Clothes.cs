@@ -11,113 +11,59 @@ using System.Runtime.CompilerServices;
 
 namespace Domain.Cloth
 {
-    public enum status
+    public enum Status
     {
         Available,
         Rental,
         NeedToSell,
         Sold
     }
+    public enum Size
+    {
+        Small,
+        Medium,
+        Large
+    }
     [Table("Clothes")]
     public class Clothes
     {
-
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Required]
-
-        public int ID { get; private set; }
+        public Clothes(){}
+        public int Id { get; private set; }
         public string Name { get; private set; }
-        public string? Description { get; private set; }
-        public string? Size { get; private set; }
-        public int? Price { get; private set; }
-        private int rentalTime = 0;
-        public int RentalTime
+        public string Description { get; private set; }
+        public Size Size { get; private set; }
+        public decimal Price { get; private set; }
+        public int RentalTime { get; private set;}
+        public int RentalPrice { get; private set; }
+        public int TypeId { get; private set; }
+        public int OriginId { get; private set; }
+        public Status Status { get; private set; }
+        public TypeClothes TypeClothes { get; private set; }
+
+        public Clothes(string name, string description, Size size, decimal price, int rentalPrice, int typeId, int originId, Status status)
         {
-            get
-            {
-                return rentalTime;
-            }
-            private set
-            {
-                if (value >= 0) rentalTime = value;
-            }
+            RentalTime = 0;
+            Update(name, description, size, price, rentalPrice, typeId, originId, status);
         }
-
-
-
-        private int rentalPrice = 20000;
-        public int RentalPrice
+        public void Update(string name, string description, Size size, decimal price, int rentalPrice, int typeId, int originId, Status status)
         {
-            get
-            {
-                return rentalPrice;
-            }
-            private set
-            {
-                if (value >= 20000) rentalPrice = value;
-            }
-        }
-        public int IDType { get; private set; }
-        public int IDOrigin { get; private set; }
-
-        public status Status { get; private set; }
-        public Clothes()
-        {
-        }
-
-        public Clothes(int iD, string name, string? description, string? size, int? price, int rentalTime, int rentalPrice, int iDType, int iDOrigin, status status)
-        {
-            ID = iD;
-            Name = name;
-            Description = description;
+            Name = name.Trim();
+            Description = description.Trim();
             Size = size;
-            Price = price;
-            RentalTime = rentalTime;
-            RentalPrice = rentalPrice;
-            IDType = iDType;
-            IDOrigin = iDOrigin;
+            Price = price>0?price:0;
+            RentalPrice = rentalPrice>10000?rentalPrice:10000;
+            TypeId = typeId;
+            OriginId = originId;
             Status = status;
         }
-
-        public void ChangeName(string name)
+        public void ChangeStatus(Status status)
         {
-            Name = name;
-        }
-        public void ChangeDescription(string? description)
-        {
-            Description = description;
-        }
-        public void ChangeSize(string? size)
-        {
-            Size = size;
-        }
-        public void ChangePrice(int price)
-        {
-            Price = price;
+            if (status != Status.Sold) Status = status;
         }
         public void ChangeRentalTime()
         {
-            RentalTime++;
+            if (RentalTime < TypeClothes.Limit) RentalTime++;
+            else Status = Status.NeedToSell;
         }
-        public void ChangeRentalPrice(int rentalPrice)
-        {
-            RentalPrice = rentalPrice;
-        }
-
-        public void ChangeStatus(status stt, int limit)
-        {
-            Status = stt;
-            if (stt!=status.Sold && limit <= RentalTime) Status = status.NeedToSell;
-        }
-        public void ChangeIDTypee(int iDType)
-        {
-            IDType = iDType;
-        }
-        public void ChangeIDOrigin(int iDOrigin)
-        {
-            IDOrigin = iDOrigin;
-        }
-
     }
 }

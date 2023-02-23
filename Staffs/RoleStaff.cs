@@ -11,24 +11,15 @@ namespace Domain.Staffs
     [Table("RoleStaff")]
     public class RoleStaff
     {
-        public RoleStaff()
+        public RoleStaff(){ }
+        public int Id { get; private set; }
+        public string Name { get; private set; }
+
+        public List<Staff> Staffs { get; private set; } = new List<Staff>();
+
+        public RoleStaff(string name)
         {
-            this.Staffs = new List<Staff>();
-        }
-
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Required]
-        public int ID { get; private set; }
-        [MaxLength(50)]
-        public string RoleName { get; private set; }
-
-        public List<Staff> Staffs { get; private set; }
-
-        public RoleStaff(int iD, string roleName)
-        {
-            ID = iD;
-            RoleName = roleName;
+            Name = name.Trim();
         }
     }
 }

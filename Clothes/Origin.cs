@@ -11,34 +11,20 @@ namespace Domain.Cloth
     [Table("Origin")]
     public class Origin
     {
-        public Origin()
-        {
-            this.Clothes = new List<Clothes>();
-        }
-
-        [Key]
-        [Required]
-        public int IDOrigin { get; private set; }
-        [MaxLength(50)]
+        public Origin(){}
+        public int Id { get; private set; }
         public string Name { get; private set; }
-        [MaxLength(50)]
         public string Address { get; private set; }
-
-        public Origin(int iDOrigin, string name, string address)
+        public List<Clothes> Clothes { get; private set; } = new List<Clothes>();
+        public Origin(string name, string address)
         {
-            IDOrigin = iDOrigin;
-            Name = name;
-            Address = address;
+            Update(name,address);
         }
-
-        public List<Clothes> Clothes { get; private set; }
-        public void ChangeName(string name)
+        public void Update(string name, string address)
         {
-            Name = name;
+            Name = name.Trim();
+            Address = address.Trim();
         }
-        public void ChangeAddress(string value)
-        {
-            Address = value;
-        }
+        
     }
 }

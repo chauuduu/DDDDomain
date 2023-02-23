@@ -13,33 +13,25 @@ namespace Domain.LaundryInvoices
     [Table("LaundryInvoice")]
     public class LaundryInvoice
     {
-        public LaundryInvoice()
-        {
-            this.DetailInvoiceLaundries = new List<DetailInvoiceLaundry>();
-        }
-
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Required]
-        public int ID { get; private set; }
-        public DateTime? Date { get; private set; }
-        public int IDLaundry { get; private set; }
-        public int IDStaff { get; private set; }
+        public LaundryInvoice() { }
+        public int Id { get; private set; }
+        public DateTime Date { get; private set; }
+        public int LaundryId { get; private set; }
+        public int StaffId { get; private set; }
         public int Total { get; private set; }
-
         public Laundry Laundry { get; private set; }
         public Staff Staff { get; private set; }
-        public List<DetailInvoiceLaundry> DetailInvoiceLaundries { get; private set; }
-
-        public LaundryInvoice(int iD, DateTime? date, int iDLaundry, int iDStaff, int total, Laundry laundry, Staff staff)
+        public List<DetailInvoiceLaundry> DetailInvoiceLaundries { get; private set; } = new List<DetailInvoiceLaundry>();
+        public LaundryInvoice(DateTime date, int laundryId, int staffId, int total)
         {
-            ID = iD;
+            Update(DateTime.Now, laundryId, staffId, total);
+        }
+        public void Update(DateTime date, int laundryId, int staffId, int total)
+        {
             Date = date;
-            IDLaundry = iDLaundry;
-            IDStaff = iDStaff;
-            Total = total;
-            Laundry = laundry;
-            Staff = staff;
+            LaundryId = laundryId;
+            StaffId = staffId;
+            Total = total>0?total:0;
         }
     }
 }

@@ -12,27 +12,26 @@ namespace Domain.LaundryInvoices
     [Table("DetailInvoiceLaundry")]
     public class DetailInvoiceLaundry
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Required]
-        public int ID { get; private set; }
-        public int IDLaundryInvoice { get; private set; }
-        public int IDClothes { get; private set; }
+        public DetailInvoiceLaundry() { }
+        public int Id { get; private set; }
+        public int LaundryInvoiceId { get; private set; }
+        public int ClothesId { get; private set; }
         public int Price { get; private set; }
         public int Quantity { get; private set; }
-
         public LaundryInvoice LaundryInvoice { get; private set; }
         public Clothes Cloth { get; private set; }
 
-        public DetailInvoiceLaundry(int iD, int iDLaundryInvoice, int iDClothes, int price, int quantity, LaundryInvoice laundryInvoice, Clothes cloth)
+        public DetailInvoiceLaundry(int laundryInvoiceId, int clothesId, int price, int quantity)
         {
-            ID = iD;
-            IDLaundryInvoice = iDLaundryInvoice;
-            IDClothes = iDClothes;
-            Price = price;
-            Quantity = quantity;
-            LaundryInvoice = laundryInvoice;
-            Cloth = cloth;
+            if (Cloth.Status == Status.Available)
+                Update(laundryInvoiceId,clothesId, price, quantity);
+        }
+        public void Update(int laundryInvoiceId, int clothesId, int price, int quantity)
+        {
+            LaundryInvoiceId = laundryInvoiceId;
+            ClothesId = clothesId;
+            Price = price>0?price:0;
+            Quantity = quantity>0?quantity:1;
         }
     }
 }

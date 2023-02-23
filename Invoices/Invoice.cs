@@ -13,35 +13,27 @@ namespace Domain.Invoices
     [Table("Invoice")]
     public class Invoice
     {
-        public Invoice()
-        {
-            this.DetailInvoices = new List<DetailInvoice>();
-        }
-
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Required]
-        public int ID { get; private set; }
+        public Invoice() { }
+        public int Id { get; private set; }
         public DateTime Date { get; private set; }
-        public int IDCustomer { get; private set; }
-        public int IDStaff { get; private set; }
-        public int? Discount { get; private set; }
+        public int CustomerId { get; private set; }
+        public int StaffId { get; private set; }
+        public int Discount { get; private set; }
         public int Total { get; private set; }
-
         public Customer Customer { get; private set; }
         public Staff Staff { get; private set; }
-        public List<DetailInvoice> DetailInvoices { get; private set; }
-
-        public Invoice(int iD, DateTime date, int iDCustomer, int iDStaff, int? discount, int total, Customer customer, Staff staff)
+        public List<DetailInvoice> DetailInvoices { get; private set; } = new List<DetailInvoice>();
+        public Invoice(int customerId, int staffId, int discount, int total)
         {
-            ID = iD;
+            Update(DateTime.Now,customerId, staffId, discount, total);
+        }
+        public void Update(DateTime date, int customerId, int staffId, int discount, int total)
+        {
             Date = date;
-            IDCustomer = iDCustomer;
-            IDStaff = iDStaff;
-            Discount = discount;
+            CustomerId = customerId;
+            StaffId = staffId;
+            Discount = discount>0?discount:0;
             Total = total;
-            Customer = customer;
-            Staff = staff;
         }
     }
 }

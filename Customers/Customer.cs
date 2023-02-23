@@ -13,41 +13,22 @@ namespace Domain.Customers
     [Table("Customer")]
     public class Customer
     {
-        public Customer()
-        {
-            this.Invoices = new List<Invoice>();
-        }
-
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Required]
-        public int ID { get; private set; }
-        public string FullName { get; private set; } = "Unknown";
+        public Customer(){ }
+        public int Id { get; private set; }
+        public string FullName { get; private set; }
         public string Phone { get; private set; }
         public string Address { get; private set; }
-
-        public List<Invoice> Invoices { get; private set; }
-
-        public Customer(int iD, string fullName, string phone, string address)
+        public List<Invoice> Invoices { get; private set; } = new List<Invoice>();
+        public Customer(string fullName, string phone, string address)
         {
-            ID = iD;
-            FullName = fullName;
-            Phone = phone;
-            Address = address;
+            Update(fullName, phone, address);
         }
-        public void ChangeName(string name)
+        public void Update(string fullName, string phone, string address)
         {
-            FullName = name;
+            FullName = fullName.Trim()??"Unknown";
+            Phone = phone.Trim();
+            Address = address.Trim();
         }
-        public void ChangePhone(string phone)
-        {
-            Phone = phone;
-        }
-        public void ChangeAddress(string address)
-        {
-            Address = address;
-        }
-
     }
 }
 
