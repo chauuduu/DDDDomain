@@ -11,19 +11,17 @@ using System.Runtime.CompilerServices;
 
 namespace Domain.Cloth
 {
-    /*
-    enum status
+    public enum status
     {
-        Available = 0,
-        Rental = 1,
-        NeedToSell = 2,
-        Sold = 3
+        Available,
+        Rental,
+        NeedToSell,
+        Sold
     }
-    */
     [Table("Clothes")]
     public class Clothes
     {
-        
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Required]
@@ -33,7 +31,7 @@ namespace Domain.Cloth
         public string? Description { get; private set; }
         public string? Size { get; private set; }
         public int? Price { get; private set; }
-        private int rentalTime=0;
+        private int rentalTime = 0;
         public int RentalTime
         {
             get
@@ -46,7 +44,7 @@ namespace Domain.Cloth
             }
         }
 
-        
+
 
         private int rentalPrice = 20000;
         public int RentalPrice
@@ -62,23 +60,13 @@ namespace Domain.Cloth
         }
         public int IDType { get; private set; }
         public int IDOrigin { get; private set; }
-        private int status = 0;
-        public int Status { 
-            get 
-            { 
-                return status; 
-            } 
-            private set
-            {
-                if (status >= 0 && status <= 3) status = value;
-            } 
-        }
 
+        public status Status { get; private set; }
         public Clothes()
         {
         }
 
-        public Clothes(int iD, string name, string? description, string? size, int? price, int rentalTime,  int rentalPrice, int iDType, int iDOrigin, int status)
+        public Clothes(int iD, string name, string? description, string? size, int? price, int rentalTime, int rentalPrice, int iDType, int iDOrigin, status status)
         {
             ID = iD;
             Name = name;
@@ -117,10 +105,10 @@ namespace Domain.Cloth
             RentalPrice = rentalPrice;
         }
 
-        public void ChangeStatus(int stt,int limit)
+        public void ChangeStatus(status stt, int limit)
         {
             Status = stt;
-            if (stt!=3 && limit <= RentalTime) Status = 2;
+            if (stt!=status.Sold && limit <= RentalTime) Status = status.NeedToSell;
         }
         public void ChangeIDTypee(int iDType)
         {
@@ -130,7 +118,6 @@ namespace Domain.Cloth
         {
             IDOrigin = iDOrigin;
         }
-        
+
     }
 }
-
