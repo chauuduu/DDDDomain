@@ -18,11 +18,11 @@ namespace Domain.LaundryInvoices
         public int ID { get; private set; }
         public int IDLaundryInvoice { get; private set; }
         public int IDClothes { get; private set; }
-        public int Price { get; set; }
-        public int Quantity { get; set; }
+        public int Price { get; private set; }
+        public int Quantity { get; private set; }
 
-        public LaundryInvoice LaundryInvoice { get; set; }
-        public Clothes Cloth { get; set; }
+        public LaundryInvoice LaundryInvoice { get; private set; }
+        public Clothes Cloth { get; private set; }
 
         public DetailInvoiceLaundry(int iD, int iDLaundryInvoice, int iDClothes, int price, int quantity, LaundryInvoice laundryInvoice, Clothes cloth)
         {

@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net;
 
 namespace Domain.Cloth
 {
@@ -22,20 +23,23 @@ namespace Domain.Cloth
         public int IDType { get; private set; }
         [MaxLength(50)]
         public string Name { get; private set; }
-        public int? Limit { get; set; }
+        public int? Limit { get; private set; }
 
-        public TypeClothes(int iDType, string name, int? limit, List<Clothes> clothes)
+        public TypeClothes(int iDType, string name, int? limit)
         {
             IDType = iDType;
             Name = name;
             Limit = limit;
-            Clothes = clothes;
         }
 
-        public List<Clothes> Clothes { get; set; }
+        public List<Clothes> Clothes { get; private set; }
         public void ChangeName(string name)
         {
             Name = name;
+        }
+        public void ChangeLimit(int? value)
+        {
+            Limit = value;
         }
     }
 }

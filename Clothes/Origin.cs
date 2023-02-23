@@ -24,18 +24,21 @@ namespace Domain.Cloth
         [MaxLength(50)]
         public string Address { get; private set; }
 
-        public Origin(int iDOrigin, string name, string address, List<Clothes> clothes)
+        public Origin(int iDOrigin, string name, string address)
         {
             IDOrigin = iDOrigin;
             Name = name;
             Address = address;
-            Clothes = clothes;
         }
 
-        public List<Clothes> Clothes { get; set; }
+        public List<Clothes> Clothes { get; private set; }
         public void ChangeName(string name)
         {
             Name = name;
+        }
+        public void ChangeAddress(string value)
+        {
+            Address = value;
         }
     }
 }

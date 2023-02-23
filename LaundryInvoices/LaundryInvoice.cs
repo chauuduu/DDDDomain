@@ -21,17 +21,17 @@ namespace Domain.LaundryInvoices
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Required]
-        public int ID { get; set; }
-        public DateTime? Date { get; set; }
-        public int IDLaundry { get; set; }
-        public int IDStaff { get; set; }
-        public int Total { get; set; }
+        public int ID { get; private set; }
+        public DateTime? Date { get; private set; }
+        public int IDLaundry { get; private set; }
+        public int IDStaff { get; private set; }
+        public int Total { get; private set; }
 
-        public Laundry Laundry { get; set; }
-        public Staff Staff { get; set; }
-        public List<DetailInvoiceLaundry> DetailInvoiceLaundries { get; set; }
+        public Laundry Laundry { get; private set; }
+        public Staff Staff { get; private set; }
+        public List<DetailInvoiceLaundry> DetailInvoiceLaundries { get; private set; }
 
-        public LaundryInvoice(int iD, DateTime? date, int iDLaundry, int iDStaff, int total, Laundry laundry, Staff staff, List<DetailInvoiceLaundry> detailInvoiceLaundries)
+        public LaundryInvoice(int iD, DateTime? date, int iDLaundry, int iDStaff, int total, Laundry laundry, Staff staff)
         {
             ID = iD;
             Date = date;
@@ -40,7 +40,6 @@ namespace Domain.LaundryInvoices
             Total = total;
             Laundry = laundry;
             Staff = staff;
-            DetailInvoiceLaundries = detailInvoiceLaundries;
         }
     }
 }

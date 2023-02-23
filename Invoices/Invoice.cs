@@ -21,18 +21,18 @@ namespace Domain.Invoices
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Required]
-        public int ID { get; set; }
-        public DateTime Date { get; set; }
+        public int ID { get; private set; }
+        public DateTime Date { get; private set; }
         public int IDCustomer { get; private set; }
         public int IDStaff { get; private set; }
-        public int? Discount { get; set; }
+        public int? Discount { get; private set; }
         public int Total { get; private set; }
 
-        public Customer Customer { get; set; }
-        public Staff Staff { get; set; }
-        public List<DetailInvoice> DetailInvoices { get; set; }
+        public Customer Customer { get; private set; }
+        public Staff Staff { get; private set; }
+        public List<DetailInvoice> DetailInvoices { get; private set; }
 
-        public Invoice(int iD, DateTime date, int iDCustomer, int iDStaff, int? discount, int total, Customer customer, Staff staff, List<DetailInvoice> detailInvoices)
+        public Invoice(int iD, DateTime date, int iDCustomer, int iDStaff, int? discount, int total, Customer customer, Staff staff)
         {
             ID = iD;
             Date = date;
@@ -42,7 +42,6 @@ namespace Domain.Invoices
             Total = total;
             Customer = customer;
             Staff = staff;
-            DetailInvoices = detailInvoices;
         }
     }
 }

@@ -21,16 +21,43 @@ namespace Domain.Cloth
 
         public int ID { get; private set; }
         public string Name { get; private set; }
-        public string? Description { get;  set; }
-        public string? Size { get;  set; }
-        public int? Price { get;  set; }
-        public int? RentalTime { get;  set; }
-        public int? RentalPrice { get;  set; }
-        public bool? IsRental { get;  set; }
+        public string? Description { get; private set; }
+        public string? Size { get; private set; }
+        public int? Price { get; private set; }
+        private int rentalTime=0;
+        public int RentalTime
+        {
+            get
+            {
+                return rentalTime;
+            }
+            private set
+            {
+                if (value >= 0) rentalTime = value;
+            }
+        }
+
+        public Clothes()
+        {
+        }
+
+        private int rentalPrice = 20000;
+        public int RentalPrice
+        {
+            get
+            {
+                return rentalPrice;
+            }
+            private set
+            {
+                if (value >= 20000) rentalPrice = value;
+            }
+        }
+        public bool IsRental { get; private set; }
         public int IDType { get; private set; }
         public int IDOrigin { get; private set; }
-        public bool? IsSolve { get; set; }
-        public Clothes(int iD, string name, string? description, string? size, int? price, int? rentalTime, int? rentalPrice, bool? isRental, int iDType, int iDOrigin,bool? isSolve)
+        public bool? IsSolve { get; private set; }
+        public Clothes(int iD, string name, string? description, string? size, int? price, int rentalTime, int rentalPrice, bool isRental, int iDType, int iDOrigin,bool? isSolve)
         {
             ID = iD;
             Name = name;
@@ -48,16 +75,48 @@ namespace Domain.Cloth
         {
             Name = name;
         }
-        public void ChangeIsRentalTrue(int limit)
+        public void ChangeDescription(string? description)
         {
-            if (RentalTime <= limit) IsRental = true;
-            else IsSolve = true;
-            
+            Description = description;
         }
-        public void ChangeIsRentalFalse(int limit)
+        public void ChangeSize(string? size)
         {
-            IsRental = false;
-            if (RentalTime == limit) IsSolve = true;
+            Size = size;
+        }
+        public void ChangePrice(int price)
+        {
+            Price = price;
+        }
+        public void ChangeRentalTime()
+        {
+            RentalTime++;
+        }
+        public void ChangeRentalPrice(int rentalPrice)
+        {
+            RentalPrice = rentalPrice;
+        }
+
+        public void ChangeIsRental(int limit)
+        {
+            if (RentalTime >= limit)
+            {
+                IsSolve = true;
+                IsRental = false;
+            }
+            else IsRental = !IsRental;
+
+        }
+        public void ChangeIDTypee(int iDType)
+        {
+            IDType = iDType;
+        }
+        public void ChangeIDOrigin(int iDOrigin)
+        {
+            IDOrigin = iDOrigin;
+        }
+        public void ChangeIsSolve()
+        {
+            IsSolve=!IsSolve;
         }
     }
 }

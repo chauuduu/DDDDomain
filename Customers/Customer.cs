@@ -22,23 +22,30 @@ namespace Domain.Customers
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Required]
         public int ID { get; private set; }
-        public string FullName { get; private set; }
-        public string Phone { get;  set; }
-        public string Address { get; set; }
+        public string FullName { get; private set; } = "Unknown";
+        public string Phone { get; private set; }
+        public string Address { get; private set; }
 
-        public List<Invoice> Invoices { get; set; }
+        public List<Invoice> Invoices { get; private set; }
 
-        public Customer(int iD, string fullName, string phone, string address, List<Invoice> invoices)
+        public Customer(int iD, string fullName, string phone, string address)
         {
             ID = iD;
             FullName = fullName;
             Phone = phone;
             Address = address;
-            Invoices = invoices;
         }
         public void ChangeName(string name)
         {
             FullName = name;
+        }
+        public void ChangePhone(string phone)
+        {
+            Phone = phone;
+        }
+        public void ChangeAddress(string address)
+        {
+            Address = address;
         }
 
     }

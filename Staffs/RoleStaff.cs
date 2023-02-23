@@ -19,17 +19,16 @@ namespace Domain.Staffs
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Required]
-        public int IDRole { get; private set; }
+        public int ID { get; private set; }
         [MaxLength(50)]
         public string RoleName { get; private set; }
 
-        public List<Staff> Staffs { get; set; }
+        public List<Staff> Staffs { get; private set; }
 
-        public RoleStaff(int iDRole, string roleName, List<Staff> staffs)
+        public RoleStaff(int iD, string roleName)
         {
-            IDRole = iDRole;
+            ID = iD;
             RoleName = roleName;
-            Staffs = staffs;
         }
     }
 }

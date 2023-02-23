@@ -18,10 +18,10 @@ namespace Domain.Invoices
         public int ID { get; private set; }
         public int IDInvoice { get; private set; }
         public int IDClothes { get; private set; }
-        public int Quantity { get; set; }
+        public int Quantity { get; private set; }
 
-        public Invoice Invoice { get; set; }
-        public Clothes Cloth { get; set; }
+        public Invoice Invoice { get; private set; }
+        public Clothes Cloth { get; private set; }
 
         public DetailInvoice(int iD, int iDInvoice, int iDClothes, int quantity, Invoice invoice, Clothes cloth)
         {
