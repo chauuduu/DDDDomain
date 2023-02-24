@@ -19,9 +19,13 @@ namespace Application.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<TypeClothes>()
-                .HasMany(c => c.Clothes)
+                .HasMany<Clothes>(c => c.Clothes)
                 .WithOne(e => e.TypeClothes)
             .HasForeignKey(s => s.TypeClothesId);
+            //modelBuilder.Entity<Clothes>()
+            //    .HasRequired(o => o.TypeCLothes)
+            //    .WithMany(c => c.Clothes)
+            //    .HasForeignKey(s => s.TypeClothesId);
         }
 
         private const string connectionString = @"Server=DESKTOP-FF1278R;Database=ClothesShop;Trusted_Connection=True;MultipleActiveResultSets=true;Encrypt=False";

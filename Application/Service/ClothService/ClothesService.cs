@@ -53,6 +53,14 @@ namespace Application.Service.ClothService
             using (var db = new MyDbContext())
             {
                 var rs = db.Clothes.ToList();
+                //rs.ForEach(e =>
+                //{
+                //    TypeClothes type = db.TypeClothes.Where(type=>type.Id==e.TypeClothesId).First();
+                //    Clothes Clothe = db.Clothes.SingleOrDefault(f => f.Id == e.Id);
+                //    Clothe.Update(Clothe.Name, Clothe.Description, Clothe.Size, Clothe.Price, Clothe.RentalPrice, Clothe.TypeClothesId, Clothe.OriginId, Clothe.Status);
+
+                //});
+             
                 return rs;
             }
         }
