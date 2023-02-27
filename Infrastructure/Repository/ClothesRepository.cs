@@ -8,71 +8,75 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Infrastructure.ConnectionDb;
+using Microsoft.EntityFrameworkCore;
+using ClothesRentalShop;
 
 namespace Infrastructure.Repository
 {
-    public class ClothesRepository : ConnectionDb.ConnectionDb, IClothesRepository
+    public class ClothesRepository : IClothesRepository
     {
-        public ClothesRepository(IConfiguration configuration) : base(configuration)
+        public string Add(Clothes Clothe)
         {
-        }
-
-        public async Task<string> DeleteAsync(int Id)
-        {
-            using (var conn = GetConnection())
+            using (var db = new MyDbContext())
             {
-                await conn.OpenAsync();
-                String sql = "delete from Clothes where ID=" + Id;
-                try
-                {
-                    var result = conn.Query<Clothes>(sql);
-                    return "Delete Success";
-                }
-                catch (Exception ex)
-                {
-                    return "Delete failed";
-                    throw ex;
-                }
+                Clothes Clo = new Clothes(Clothe.Name, Clothe.Description, Clothe.Size, Clothe.Price, Clothe.RentalPrice, Clothe.TypeClothesId, Clothe.OriginId, Clothe.Status);
+                db.Add(Clothe);
+                db.SaveChanges();
+                return "Insert Success";
             }
         }
 
-        public async Task<IEnumerable<Clothes>> GetAllAsync()
+        public string Delete(int Id)
         {
-            /*
-            using (var conn = GetConnection())
+            using (var db = new MyDbContext())
             {
-                await conn.OpenAsync();
-                String sql = "select * from Clothes";
-                var result = conn.Query<Clothes>(sql);
-                return result;
-            }*/
-            throw new NotImplementedException();
+                var Clothe = db.Clothes.Where(e => e.Id == Id).FirstOrDefault();
+                if (Clothe == null) return "Delete failed";
+                db.Clothes.Remove(Clothe);
+                db.SaveChanges();
+                return "Delete Success";
+            }
         }
 
-        public async Task<string> InsertAsync(Clothes p)
+        public Clothes GetById(int Id)
         {
-            throw new NotImplementedException();
-            /*
-            using (var conn = GetConnection())
+            using (var db = new MyDbContext())
             {
-                await conn.OpenAsync();
-                //String sql = "insert into Clothes(Name,Description,Size,Price,RentalTime,RentalPrice,IsRental,IDType,IDOrigin) values(N'"+p.Name+"',N'"+p.Description+"',N'"+p.Size+"',"+p.Price+",0,"+p.RentalPrice+",0,"+p.IDType+","+p.IDOrigin+")";
-                try
-                {
-                    var result = conn.Query<Clothes>(sql);
-                    return "Insert Success";
-                }
-                catch (Exception ex)
-                {
-                    return "Insert failed";
-                    throw ex;
-                }
-            }*/
+                var rs = db.Clothes.Include(e => e.TypeClothes).SingleOrDefault(e => e.Id == Id);
+                return rs;
+            }
         }
 
-        public Task<string> UpdateAsync(Clothes p)
+        public List<Clothes> GetList()
         {
-            throw new NotImplementedException();
+            using (var db = new MyDbContext())
+            {
+                var rs = db.Clothes.Include(e => e.TypeClothes).ToList();
+                return rs;
+            }
+        }
+
+        public List<Clothes> GetListLike(string Name)
+        {
+            using (var db = new MyDbContext())
+            {
+                var rs = db.Clothes.Where(e => e.Name.Contains(Name)).Include(e => e.TypeClothes).ToList();
+                return rs;
+            }
+        }
+
+        public string Update(int Id, Clothes Clothe)
+        {
+            using (var db = new MyDbContext())
+            {
+                Clothes ClothesBefore = db.Clothes.SingleOrDefault(e => e.Id == Id);
+                if (ClothesBefore.Status == Status.Available && Clothe.Status == Status.Rental)
+                    ClothesBefore.ChangeRentalTime();
+                ClothesBefore.Update(Clothe.Name, Clothe.Description, Clothe.Size, Clothe.Price, Clothe.RentalPrice, Clothe.TypeClothesId, Clothe.OriginId, Clothe.Status);
+                db.SaveChanges();
+                return "Update Success";
+            }
         }
     }
 }

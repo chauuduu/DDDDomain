@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net;
+using System.Text.Json.Serialization;
 
 namespace Domain.Cloth
 {
@@ -16,6 +17,7 @@ namespace Domain.Cloth
         public int Id { get; private set; }
         public string Name { get; private set; }
         public int Limit { get; private set; }
+        [JsonIgnore]
         public List<Clothes> Clothes { get; private set; } = new List<Clothes>();
         public TypeClothes(string name, int limit)
         {

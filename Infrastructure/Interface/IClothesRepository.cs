@@ -9,9 +9,12 @@ namespace Infrastructure.Interface
 {
     public interface IClothesRepository
     {
-        Task<IEnumerable<Clothes>> GetAllAsync();
-        Task<String> InsertAsync(Clothes p);
-        Task<String> UpdateAsync(Clothes p);
-        Task<String> DeleteAsync(int Id);
+        List<Clothes> GetList();
+        List<Clothes> GetListLike(string Name);
+        Clothes GetById(int Id);
+
+        string Add(Clothes Clothe);
+        string Update(int Id, Clothes Clothe);
+        string Delete(int Id);
     }
 }

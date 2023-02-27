@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Domain.Invoices;
 using Domain.LaundryInvoices;
 using System.Runtime.CompilerServices;
+using System.Text.Json.Serialization;
 
 namespace Domain.Cloth
 {
@@ -38,6 +39,7 @@ namespace Domain.Cloth
         public int TypeClothesId { get; private set; }
         public int OriginId { get; private set; }
         public Status Status { get; private set; }
+        [JsonIgnore]
         public TypeClothes TypeClothes { get; private set; }
         public Clothes(string name, string description, Size size, decimal price, int rentalPrice, int typeClothesId, int originId, Status status)
         {

@@ -1,4 +1,4 @@
-﻿using Application.ViewModel;
+﻿
 using Domain.Cloth;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -9,7 +9,7 @@ using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
-namespace Application.Data
+namespace Infrastructure.ConnectionDb
 {
     public class MyDbContext : DbContext
     {

@@ -16,6 +16,7 @@ builder.Services.AddSwaggerGen();
 
 Services.AddTransient<IClothesRepository, ClothesRepository>();
 Services.AddTransient<IClothesService,ClothesService>();
+Services.AddTransient<ITypeClothesRepository, TypeClothesRepository>();
 Services.AddTransient<ITypeClothesService, TypeClothesService>();
 
 

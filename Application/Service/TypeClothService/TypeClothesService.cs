@@ -1,66 +1,55 @@
-﻿using Application.Data;
-using Dapper;
+﻿
 using Domain.Cloth;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Infrastructure.Interface;
+using Infrastructure.Repository;
 
 namespace Application.Service.TypeClothService
 {
     public class TypeClothesService : ITypeClothesService
     {
+        readonly ITypeClothesRepository typeClothesRepository;
+        public TypeClothesService(ITypeClothesRepository _typeClothesRepository)
+        {
+            this.typeClothesRepository = _typeClothesRepository;
+        }
         public string Add(TypeClothes TypeClothes)
         {
-            using (var db = new MyDbContext())
+            var clothe = typeClothesRepository.GetById(TypeClothes.Id);
+            if (clothe == null)
             {
-                TypeClothes Type = new TypeClothes(TypeClothes.Name, TypeClothes.Limit);
-                db.Add(Type);
-                db.SaveChanges();
-                return "Insert Success";
+                return typeClothesRepository.Add(TypeClothes);
             }
+            return "Failed";
         }
 
         public string Delete(int Id)
         {
-            using (var db = new MyDbContext())
+            var clothe = typeClothesRepository.GetById(Id);
+            if (clothe == null)
             {
-                var Clothe = db.TypeClothes.Where(e => e.Id == Id).FirstOrDefault();
-                if (Clothe == null) return "Delete failed";
-                db.TypeClothes.Remove(Clothe);
-                db.SaveChanges();
-                return "Delete Success";
+                return "Failed";
             }
+            return typeClothesRepository.Delete(Id);
         }
 
         public TypeClothes GetById(int Id)
         {
-            using (var db = new MyDbContext())
-            {
-                var rs = db.TypeClothes.SingleOrDefault(e => e.Id == Id);
-                return rs;
-            }
+            return typeClothesRepository.GetById(Id);
         }
 
         public List<TypeClothes> GetList()
         {
-            using (var db = new MyDbContext())
-            {
-                var rs = db.TypeClothes.ToList<TypeClothes>();
-                return rs;
-            }
+            return typeClothesRepository.GetList();
         }
 
-        public string Update(int Id,TypeClothes TypeClothes)
+        public string Update(int Id, TypeClothes TypeClothes)
         {
-            using (var db = new MyDbContext())
+            var clothe = typeClothesRepository.GetById(Id);
+            if (clothe == null)
             {
-                TypeClothes ClothesBefore = db.TypeClothes.SingleOrDefault(e => e.Id == Id);
-                ClothesBefore.Update(TypeClothes.Name, TypeClothes.Limit);
-                db.SaveChanges();
-                return "Update Success";
+                return "Failed";
             }
+            return typeClothesRepository.Update(Id, TypeClothes);
         }
     }
 }

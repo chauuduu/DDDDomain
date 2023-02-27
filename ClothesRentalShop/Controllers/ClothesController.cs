@@ -30,6 +30,7 @@ namespace ClothesRentalShop.Controllers
         {
             return Ok(ClothesService.GetById(Id));
         }
+
         [HttpPost]
         public async Task<IActionResult> Insert(Clothes ClothesEx)
         {
