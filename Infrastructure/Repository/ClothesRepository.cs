@@ -10,8 +10,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Infrastructure.ConnectionDb;
 using Microsoft.EntityFrameworkCore;
-using ClothesRentalShop;
-
 namespace Infrastructure.Repository
 {
     public class ClothesRepository : IClothesRepository

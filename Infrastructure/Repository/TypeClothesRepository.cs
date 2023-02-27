@@ -1,4 +1,4 @@
-﻿using ClothesRentalShop;
+﻿
 using Domain.Cloth;
 using Infrastructure.ConnectionDb;
 using Infrastructure.Interface;
