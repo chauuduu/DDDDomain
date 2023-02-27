@@ -14,10 +14,21 @@ namespace Domain.Customers
     public class Customer
     {
         public Customer(){ }
+
+
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Required]
         public int Id { get; private set; }
-        public string FullName { get; private set; }
-        public string Phone { get; private set; }
-        public string Address { get; private set; }
+        [Required]
+        [MaxLength(100)]
+        public string FullName { get; private set; } = "Unknown";
+        [Required]
+        [MaxLength(50)]
+        public string Phone { get; private set; } = "Unknown";
+        [Required]
+        [MaxLength(50)]
+        public string Address { get; private set; } = "Unknown";
         public List<Invoice> Invoices { get; private set; } = new List<Invoice>();
         public Customer(string fullName, string phone, string address)
         {

@@ -13,10 +13,18 @@ namespace Domain.Invoices
     public class DetailInvoice
     {
         public DetailInvoice(){ }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Required]
+
         public int Id { get; private set; }
         public int InvoiceId { get; private set; }
         public int ClothesId { get; private set; }
+        [ForeignKey("Id")]
+
         public Invoice Invoice { get; private set; }
+        [ForeignKey("Id")]
+
         public Clothes Cloth { get; private set; }
         public DetailInvoice(int invoiceId, int clothesId)
         {

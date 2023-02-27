@@ -13,10 +13,20 @@ namespace Domain.Laundries
     public class Laundry
     {
         public Laundry(){}
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Required]
+
         public int Id { get; private set; }
-        public string Name { get; private set; }
-        public string Phone { get; private set; }
-        public string Address { get; private set; }
+        [Required]
+        [MaxLength(100)]
+        public string Name { get; private set; }= "Unknown";
+        [Required]
+        [MaxLength(100)]
+        public string Phone { get; private set; } = "Unknown";
+        [Required]
+        [MaxLength(100)]
+        public string Address { get; private set; } = "Unknown";
         public int Rate { get; private set; }
 
         public List<LaundryInvoice> LaundryInvoices { get; private set; } = new List<LaundryInvoice>();

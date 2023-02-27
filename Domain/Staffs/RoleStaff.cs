@@ -12,8 +12,14 @@ namespace Domain.Staffs
     public class RoleStaff
     {
         public RoleStaff(){ }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Required]
+
         public int Id { get; private set; }
-        public string Name { get; private set; }
+        [Required]
+        [MaxLength(50)]
+        public string Name { get; private set; } = "User";
 
         public List<Staff> Staffs { get; private set; } = new List<Staff>();
 

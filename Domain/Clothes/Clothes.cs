@@ -29,18 +29,33 @@ namespace Domain.Cloth
     public class Clothes
     {
         private Clothes(){}
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Required]
         public int Id { get; private set; }
-        public string Name { get; private set; }
-        public string Description { get; private set; }
+        [Required]
+        [MaxLength(50)]
+        public string Name { get; private set; } = "Unknown Clothes";
+        [Required]
+        [MaxLength(50)]
+        public string Description { get; private set; } = "None";
         public Size Size { get; private set; }
         public decimal Price { get; private set; }
         public int RentalTime { get; private set;}
         public int RentalPrice { get; private set; }
+        [ForeignKey("Id")]
         public int TypeClothesId { get; private set; }
+        [ForeignKey("Id")]
         public int OriginId { get; private set; }
         public Status Status { get; private set; }
         [JsonIgnore]
         public TypeClothes TypeClothes { get; private set; }
+        [JsonIgnore]
+        public Origin Origin { get; private set; }
+        [JsonIgnore]
+        public List<DetailInvoice> DetailInvoices { get; set; } = new List<DetailInvoice>();
+        [JsonIgnore]
+        public List<DetailInvoiceLaundry> DetailInvoiceLaundries { get; set; } = new List<DetailInvoiceLaundry>();
 
         public Clothes(string name, string description, Size size, decimal price, int rentalPrice, int typeClothesId, int originId, Status status)
         {

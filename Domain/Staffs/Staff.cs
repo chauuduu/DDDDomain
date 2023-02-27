@@ -15,13 +15,27 @@ namespace Domain.Staffs
     public class Staff
     {
         public Staff() { }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Required]
+
         public int Id { get; private set; }
-        public string CitizenCode { get; private set; }
-        public string FullName { get; private set; }
+        [Required]
+        [MaxLength(50)]
+        public string CitizenCode { get; private set; } = "Unknown";
+        [Required]
+        [MaxLength(50)]
+        public string FullName { get; private set; } = "Unknown";
         public DateTime Birthday { get; private set; }
-        public string Phone { get; private set; }
-        public string Address { get; private set; }
+        [Required]
+        [MaxLength(50)]
+        public string Phone { get; private set; } = "Unknown";
+        [Required]
+        [MaxLength(50)]
+        public string Address { get; private set; } = "Unknown";
         public int RoleId { get; private set; }
+        [ForeignKey("Id")]
+
         public RoleStaff RoleStaff { get; private set; }
         public List<Invoice> Invoices { get; private set; } = new List<Invoice>();
         public List<LaundryInvoice> LaundryInvoices { get; private set; } = new List<LaundryInvoice>();

@@ -13,11 +13,16 @@ namespace Domain.LaundryInvoices
     public class DetailInvoiceLaundry
     {
         public DetailInvoiceLaundry() { }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Required]
         public int Id { get; private set; }
         public int LaundryInvoiceId { get; private set; }
         public int ClothesId { get; private set; }
         public decimal Price { get; private set; }
+        [ForeignKey("Id")]
         public LaundryInvoice LaundryInvoice { get; private set; }
+        [ForeignKey("Id")]
         public Clothes Cloth { get; private set; }
 
         public DetailInvoiceLaundry(int laundryInvoiceId, int clothesId, decimal price)

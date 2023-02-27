@@ -13,10 +13,17 @@ namespace Domain.Cloth
     public class Origin
     {
         public Origin(){}
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Required]
         public int Id { get; private set; }
-        public string Name { get; private set; }
-        public string Address { get; private set; }
-        [JsonIgnore]
+        [Required]
+        [MaxLength(50)]
+        public string Name { get; private set; } = "Unknown";
+        [Required]
+        [MaxLength(50)]
+        public string Address { get; private set; } = "Unknown";
+
         public List<Clothes> Clothes { get; private set; } = new List<Clothes>();
         public Origin(string name, string address)
         {

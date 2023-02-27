@@ -323,6 +323,10 @@
               "target": "Package",
               "version": "[2.0.123, )"
             },
+            "EntityFramework": {
+              "target": "Package",
+              "version": "[6.4.4, )"
+            },
             "Microsoft.Data.SqlClient": {
               "target": "Package",
               "version": "[5.1.0, )"

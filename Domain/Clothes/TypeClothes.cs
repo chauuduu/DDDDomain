@@ -14,8 +14,13 @@ namespace Domain.Cloth
     public class TypeClothes
     {
         private TypeClothes(){}
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Required]
         public int Id { get; private set; }
-        public string Name { get; private set; }
+        [Required]
+        [MaxLength(50)]
+        public string Name { get; private set; } = "Unknown type";
         public int Limit { get; private set; }
 
         public List<Clothes> Clothes { get; private set; } = new List<Clothes>();

@@ -14,12 +14,17 @@ namespace Domain.Invoices
     public class Invoice
     {
         public Invoice() { }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Required]
         public int Id { get; private set; }
-        public DateTime Date { get; private set; }
+        public DateTime Date { get; private set; } = DateTime.Now;
         public int CustomerId { get; private set; }
         public int StaffId { get; private set; }
-        public int Discount { get; private set; }
+        public int Discount { get; private set; } = 0;
+        [ForeignKey("Id")]
         public Customer Customer { get; private set; }
+        [ForeignKey("Id")]
         public Staff Staff { get; private set; }
         public List<DetailInvoice> DetailInvoices { get; private set; } = new List<DetailInvoice>();
         public Invoice(int customerId, int staffId, int discount)
