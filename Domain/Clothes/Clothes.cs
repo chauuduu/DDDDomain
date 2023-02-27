@@ -41,6 +41,7 @@ namespace Domain.Cloth
         public Status Status { get; private set; }
         [JsonIgnore]
         public TypeClothes TypeClothes { get; private set; }
+
         public Clothes(string name, string description, Size size, decimal price, int rentalPrice, int typeClothesId, int originId, Status status)
         {
             RentalTime = 0;
